@@ -1,0 +1,967 @@
+{
+  "info": {
+    "_postman_id": "499a999d-e94a-4475-864a-07ecd4ea4f34",
+    "name": "metro_mondego",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26995791"
+  },
+  "item": [
+    {
+      "name": "── AUTH ──────────────────────────",
+      "item": [
+        {
+          "name": "1. Login (Super Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results) {",
+                  "    pm.environment.set('auth_token', jsonData.results);",
+                  "    console.log('Token saved:', jsonData.results);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"superadmin\",\n  \"password\": \"superadmin2026\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1. Login (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results) {",
+                  "    pm.environment.set('auth_token', jsonData.results);",
+                  "    console.log('Token saved:', jsonData.results);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin1\",\n  \"password\": \"admin1pass\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1. Login (Customer)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results) {",
+                  "    pm.environment.set('auth_token', jsonData.results);",
+                  "    console.log('Token saved:', jsonData.results);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"customer1\",\n  \"password\": \"customer1pass\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "── SUPER ADMIN ───────────────────",
+      "item": [
+        {
+          "name": "2. Register Admin",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var suffix = Math.floor(Math.random() * 10000);",
+                  "pm.environment.set('admin_username', 'admin' + suffix);",
+                  "pm.environment.set('admin_email', 'admin' + suffix + '@metromondego.pt');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.user_id) {",
+                  "    pm.environment.set('admin_user_id', jsonData.results.user_id);",
+                  "    console.log('Admin registered with user_id:', jsonData.results.user_id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin admin1\",\n  \"username\": \"admin1\",\n  \"email\": \"admin1@gmail.com\",\n  \"password\": \"admin1pass\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/register/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "register",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "── ADMIN ─────────────────────────",
+      "item": [
+        {
+          "name": "3. Register Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "var suffix = Math.floor(Math.random() * 10000);",
+                  "pm.environment.set('customer_username', 'customer' + suffix);",
+                  "pm.environment.set('customer_email', 'customer' + suffix + '@email.pt');",
+                  "pm.environment.set('customer_nif', String(Math.floor(Math.random() * 900000000) + 100000000));",
+                  "pm.environment.set('customer_phone', String(Math.floor(Math.random() * 900000000) + 900000000));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.user_id) {",
+                  "    pm.environment.set('customer_user_id', jsonData.results.user_id);",
+                  "    console.log('Customer registered with user_id:', jsonData.results.user_id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Customer customer1\",\n  \"username\": \"customer1\",\n  \"nif\": \"123456789\",\n  \"phone\": \"912345678\",\n  \"email\": \"customer1@gmail.com\",\n  \"password\": \"customer1pass\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/register/customer",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "register",
+                "customer"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Update Line Operation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_time\": \"07:30:00\",\n  \"end_time\": \"21:00:00\",\n  \"frequency_minutes\": 20,\n  \"vehicle_capacity\": 50,\n  \"is_open\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/line_operation/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "line_operation",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Close Line",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_open\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/line_operation/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "line_operation",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Update Fare Price",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "console.log('Fare update status:', jsonData.status);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 4.00,\n  \"effective_from\": \"2026-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/fares/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "fares",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Broadcast Notice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Greve de Transportes\",\n  \"message\": \"Possíveis atrasos entre as 10:00 e as 13:00 devido a greve parcial.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/notices/broadcast",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "notices",
+                "broadcast"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Create Promotion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.promotion_id) {",
+                  "    pm.environment.set('promotion_id', jsonData.results.promotion_id);",
+                  "    console.log('Promotion created with id:', jsonData.results.promotion_id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Férias de Verão\",\n  \"line_id\": 2,\n  \"product_type\": \"single_trip\",\n  \"discount_percent\": 20,\n  \"start_date\": \"2026-07-01\",\n  \"end_date\": \"2026-07-31\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/promotions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "promotions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "── CUSTOMER ──────────────────────",
+      "item": [
+        {
+          "name": "8. List Lines & Next Departures",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/lines_next",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "lines_next"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "9. Wallet Top-Up",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.new_balance !== undefined) {",
+                  "    pm.environment.set('wallet_balance', jsonData.results.new_balance);",
+                  "    console.log('New wallet balance:', jsonData.results.new_balance);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 20.00,\n  \"payment_method\": \"card\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/wallet/topup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "wallet",
+                "topup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10. Purchase Single Trip",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.purchase_id) {",
+                  "    pm.environment.set('purchase_id', jsonData.results.purchase_id);",
+                  "    console.log('Purchase id:', jsonData.results.purchase_id, '| Final price:', jsonData.results.final_price);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_id\": 2,\n  \"product_type\": \"single_trip\",\n  \"travel_date\": \"2026-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/purchase",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10. Purchase Monthly Pass",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.results && jsonData.results.purchase_id) {",
+                  "    pm.environment.set('purchase_id_pass', jsonData.results.purchase_id);",
+                  "    console.log('Pass purchase id:', jsonData.results.purchase_id, '| Final price:', jsonData.results.final_price);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"line_id\": 2,\n  \"product_type\": \"monthly\",\n  \"travel_date\": \"2026-05-15\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/purchase",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "11. Use Ticket (Single Trip)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"used_at\": \"2026-04-12 08:20:00\",\n  \"station_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/ticket/use/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "ticket",
+                "use",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "11. Use Ticket (Monthly Pass)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"used_at\": \"2026-05-15 15:30:00\",\n  \"station_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/ticket/use/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "ticket",
+                "use",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "15. Get Notice —  Mark Read",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/dbproj/notices",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "notices"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "── REPORTS (Admin) ───────────────",
+      "item": [
+        {
+          "name": "12. Report — Peak & Low Demand",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/dbproj/report/demand",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "report",
+                "demand"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "13. Report — Top Spenders by Line",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/dbproj/report/top_spenders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "report",
+                "top_spenders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "14. Report — Monthly Active & Repeat Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/dbproj/report/monthly",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "dbproj",
+                "report",
+                "monthly"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_token",
+      "value": ""
+    },
+    {
+      "key": "admin_user_id",
+      "value": ""
+    },
+    {
+      "key": "customer_user_id",
+      "value": ""
+    },
+    {
+      "key": "purchase_id",
+      "value": ""
+    },
+    {
+      "key": "purchase_id_pass",
+      "value": ""
+    },
+    {
+      "key": "promotion_id",
+      "value": ""
+    },
+    {
+      "key": "wallet_balance",
+      "value": ""
+    }
+  ]
+}
