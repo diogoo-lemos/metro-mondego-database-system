@@ -4,14 +4,14 @@ Projeto de Bases de Dados — Ano Letivo 2025/2026
 
 ## Sobre o projeto
 
-O **Metro Mondego System** é uma API REST para gestão de um sistema de metro: autenticação e registo de utilizadores (clientes, administradores e super administrador), consulta de linhas e horários, compra e validação de bilhetes/passes, carregamento de carteira digital, gestão de tarifas e operação de linhas, e relatórios analíticos para administração (procura por horário, top clientes por linha, faturação mensal).
+O **Metro Mondego System** é uma REST API para gestão de um sistema de metro: autenticação e registo de utilizadores (clientes, administradores e super administrador), consulta de linhas e horários, compra e validação de bilhetes/passes, carregamento de carteira digital, gestão de tarifas e operação de linhas, e relatórios analíticos para administração (procura por horário, top clientes por linha, faturação mensal).
 
 O projeto foi desenvolvido em torno de um modelo relacional em PostgreSQL, com particular cuidado em garantir consistência sob concorrência (transações, locks explícitos e triggers) — por exemplo, para impedir overbooking de lugares numa viagem, saldo negativo na carteira, ou validação duplicada do mesmo bilhete.
 
 ## Tecnologias utilizadas
 
 - **Python 3.10+** — linguagem principal do backend
-- **Flask** — framework da API REST
+- **Flask** — framework da REST API
 - **Flask-JWT-Extended** — autenticação e autorização baseadas em JWT (com controlo de acesso por role: `customer`, `admin`, `superadmin`)
 - **PostgreSQL 14+** — base de dados relacional
 - **psycopg2** — driver de acesso à base de dados
@@ -48,7 +48,7 @@ O projeto foi desenvolvido em torno de um modelo relacional em PostgreSQL, com p
 
 - Python 3.10 ou superior
 - PostgreSQL 14 ou superior
-- Postman (opcional, para testar os endpoints)
+- Postman 
 
 ## Como correr o projeto
 
@@ -138,7 +138,7 @@ Descrição detalhada de cada endpoint, exemplos de request/response e as decis�
 
 - Passwords guardadas com **PBKDF2-HMAC-SHA256** (salt aleatório de 32 bytes por utilizador, 100 000 iterações).
 - Autenticação e autorização via **JWT**, com verificação de role em cada endpoint protegido.
-- Credenciais da base de dados e chave secreta do JWT carregadas exclusivamente a partir de variáveis de ambiente (`.env`), nunca hardcoded no código.
+- Credenciais da base de dados e chave secreta do JWT carregadas exclusivamente a partir de variáveis de ambiente (`.env`).
 
 ## Autor
 
